@@ -113,16 +113,15 @@ class Main extends Component {
             errors = [...errors, ...validation['errors']]
         })
 
-        // if (client['name']===""||client['cardNumber']===""||client['date']===""||client['cvv']===""||client['cpf']===""){
-        //     window.alert("Preencha todos os campos.")
-        // }
-        // else if (errors.length>0){
-        //     window.alert("Corrija os campos indicados.")
-        // }
-        // else{
-        //     this.props.updateStateModal(true)
-        // }
-        this.props.updateStateModal(true)
+        if (client['name']===""||client['cardNumber']===""||client['date']===""||client['cvv']===""||client['cpf']===""){
+            window.alert("Preencha todos os campos.")
+        }
+        else if (errors.length>0){
+            window.alert("Corrija os campos indicados.")
+        }
+        else{
+            this.props.updateStateModal(true)
+        }
     }
 
     renderMain(props, ingredient){
