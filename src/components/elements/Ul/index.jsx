@@ -7,14 +7,14 @@ class Ul extends Component {
     elementList(props, element, index){
         if (props.module==='ingredient'){
             const optionIngredient={
-                'ingredient': props[props.module][props.module],
+                'ingredient': props['element'][props.module],
                 'index': index
             }
             return (
                 <Button {...props} className={`option${element['selected']?" activate": ""}`} parameter={optionIngredient}>{element['name']}</Button>
             )
         }
-        else if (props.module==='prices'){         
+        else if (props.module==='price' || props.module==='prices'){    
             return (
                 <Span {...props} className='option'>{`${element['ingredient_display']}: ${element['name']}`}</Span>            
             )
@@ -23,13 +23,13 @@ class Ul extends Component {
 
     render() {
         const {...props} = this.props
-        const content= props[props.module]['options']
+        const content= props['element']['options']
         return (
             <ul {...props} className={`ul ul-${props.module}`} >
                 {
                     content.map((element, index) =>{
                         return(                            
-                            <Li key={`${props.module}_option_li_${index}`} className='ingredient'>
+                            <Li key={`${props.module}_option_li_${index}`} className={props.module}>
                                 {this.elementList(props, element, index)}
                             </Li>
                         ) 

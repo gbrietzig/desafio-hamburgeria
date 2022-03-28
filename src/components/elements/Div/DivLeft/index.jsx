@@ -1,34 +1,42 @@
 import { Component } from 'react';
-import logo from '../../../../assets/img/sandwich.svg';
 import Div from '../../Div';
 import Span from '../../Span';
 import Ul from '../../Ul';
+import Img from '../../Img';
 
 class DivLeft extends Component {
-    render() {
-        const {...props } = this.props;
-        if (props['page']==='index'){
+    renderPack(props){
+        if (props['page']==='/'){
             return (
-                <Div className='left'>        
-                    <Div className="image">
-                        <img src={logo} alt='imagem' />
-                    </Div>
-                    <Div className="pack-snack">
-                        <Div className="section-title">
-                            <Span className='section-title'>{props.ingredient['title']}</Span>
-                        </Div>
-                        <Div className="ingredient">
-                            <Ul {...props } module="ingredient"></Ul>
-                        </Div>
-                    </Div>
-                </Div>
-            );
-        }
-        else if (props['page']==='checkout'){
-            return (
-                <>Checkout</>
+                <Ul {...props } module="ingredient"></Ul>
             )
         }
+        else if (props['page']==='/checkout'){
+            return (
+                <>
+                    <Span className='section-subtitle'>Resumo do Pedido:</Span>
+                    <Ul {...props } module='price'></Ul>
+                    <Span className='section-price'>{`Total: ${props['element']['price']}`}</Span>
+                </>
+            )
+        }
+    }
+
+    render() {
+        const {...props } = this.props;
+        return (
+            <Div className='left'>
+                <Img />
+                <Div className="pack-snack">
+                    <Div className="section-title">
+                        <Span className='section-title'>{props.element['title']}</Span>
+                    </Div>
+                    <Div className="ingredient">
+                        {this.renderPack(props)}
+                    </Div>
+                </Div>
+            </Div>
+        );
     }
 }
 

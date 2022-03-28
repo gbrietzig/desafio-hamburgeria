@@ -4,10 +4,11 @@ import Main from '../../elements/Main';
 
 class Perfil extends Component {
     render() {
+        const {...props } = this.props;
         return (
             <>
                 <Header>Monte Seu Sanduíche</Header>
-                <Main page="checkout" />
+                <Main page="/checkout"  {...props}/>
             </>
         );
     }

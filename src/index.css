@@ -1,21 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto&display=swap');
+
+html, body, #root {
+  height: 100%;
+}
+
+/* HEADER */
 .header {
   width: 100%;
-  height: 80px;
+  height: 12%;
 }
 
 .div-header {
   width: 100%;
   height: 100%;  
   background: #C62828;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content:center;
 }
 
 .application.title {
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 600;
@@ -24,54 +28,101 @@
   color: #FFFFFF;
 }
 
-.main {  
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-evenly;
-  padding-top: 20px;
-}
-
+/* LEFT*/
 .div-left {
   display: block;
   height: 100%;
   text-align: center;
-  width: 680px;
+  width: 53%;
 }
 
-.section-title {
-  width: 90px;
-  height: 19px;
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 40x0;
-  font-size: 16px;
-  line-height: 19p;
+/* LEFT - IMAGE*/
+.div-image{
+  display: block;
+  height: 42%;
   text-align: center;
-  color: #000000;
-  padding-top: 5px;
-  padding-bottom: 4px;
 }
 
-.div-choices{
+.img {
+  width: 100%;
+  height: 100%;
+}
+
+/* LEFT - PACK SNACK*/
+.div-pack-snack{
+  display: block;
+  height: 58%;
+  text-align: center;
+}
+
+/* LEFT - PACK SNACK - TITLE*/
+.div-section-title{
+  display: block;
+  height: 17%;
+  padding-top: 3%;
+  padding-bottom: 1.5%;
+}
+
+.span-section-title {
+  display: inline;
+  width: 100%;
+  font-family: 'Roboto';
+  font-size: 1.5rem;
+  text-align: center;
+  color: #8E0000;
+}
+
+/* RIGHT*/
+.div-right {
+  position: relative;
+  width: 37%;
+  height: 100%;  
+  background: #FFC107;
+  border-radius: 4px;
+}
+
+/* MAIN */
+.main {  
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  width: 100%;
+  height: 88%;
+  justify-content: space-evenly;
+  padding-top: 3%;
+  padding-bottom: 3%;
+}
+
+/* INDEX */
+/* INDEX - MAIN - LEFT - PACK SNACK - OPTIONS*/
+.div-ingredient{
+  display: block;
+  height: 83%;
+  overflow: auto;
+}
+
+.ul-ingredient{
+  height: 100%;
+  display: block;
+} 
+
+.li-ingredient{
+  height: 25%;
+  display: block;
+  padding-top: 2%;
 }
 
 .button-option{
-  width: 680px;
-  height: 51px;
+  display: block;
+  font-weight: 400;
+  width: 100%;
+  height: 100%;
   background: #C62828;
   border-radius: 40px;
-  margin: 5px;
-  
   font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-  color: #FFFFFF;
+  font-size: 1rem;
+  text-align: center;  color: #FFFFFF;
+  border: none
+
 }
 
 .button-option:hover {
@@ -82,61 +133,229 @@
   background-color: #C79100;
 }
 
-.div-right {
-  width: 480px;
-  height: 560px;  
-  background: #FFC107;
-  border-radius: 4px;
-  padding: 24px;
+/* INDEX - MAIN - RIGHT - TOP */
+.div-top-area{
+  width: 100%;
+  height: 80%;
+  overflow: auto;
 }
 
-.ingredients-title {  
-  width: 100%;
+/* INDEX - MAIN - RIGHT - TOP - TITLE */
+.div-ingredients-title {
+  margin: 4%;
+}
+
+.span-ingredients-title {  
   font-family: 'Lobster';
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
-  line-height: 30px;
+  font-size: 1.5rem;
   color: #000000;
 }
 
-.div-ingredientsList {
-  position: relative;
+/* INDEX - MAIN - RIGHT - TOP - LIST */
+.div-ingredients-list {
+  margin-left: 4%;
 }
 
-.button-next{
-  
-  left: 0%;
-  right: 0%;
-  top: 0%;
-  bottom: 0%;
-
-  background: rgba(198, 40, 40, 0.5);
-  border-radius: 40px;
-  position: relative;
-  left: 2.35%;
-  right: 2.35%;
-  top: 31.37%;
-  bottom: 31.37%;
-
+.li-prices{
+  padding-bottom: 2%;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-  /* identical to box height */
+  font-size: 1rem;
+}
 
+
+/* INDEX - MAIN - RIGHT - BOTTON */
+.div-bottom-area{
+  width: 100%;
+  height: 10%;
+  position: absolute;
   text-align: center;
-
-  color: rgba(255, 255, 255, 0.5);
+  bottom: 0;
+  height: auto;
 }
 
-img {
-  width: 272px;
-  height: 238px;
+/* INDEX - MAIN - RIGHT - BOTTON - PRICE */
+.div-ingredients-price {
+  text-align: center;
+  margin-bottom: 6%;
 }
 
+.span-ingredients-price{
+  font-family: 'Roboto';
+  font-style: normal;  
+  font-weight:600;
+  font-size: 1.5rem;
+}
 
-/* .div {
-  border: solid black;
-} */
+/* INDEX - MAIN - RIGHT - BOTTON - BUTTON */
+.div-ingredients-button {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 6%;
+}
+
+.button-confirm{
+  width: 70%;
+  height: 3rem;
+  background-color: rgba(198, 40, 40, 0.5);
+  font-weight: 400;
+  border-radius: 40px;
+  font-family: 'Roboto';
+  font-size: 1.5rem;
+  text-align: center;
+  color:rgba(255, 255, 255, 0.5);
+  border: none;
+}
+
+.button-confirm:hover {
+  background-color: #C79100;
+}
+
+/* CHECKOUT */
+/* CHECKOUT - MAIN - SUBTITLE */
+.span-section-subtitle {
+  display: block;
+  padding-top: 2%;
+  font-family: 'Roboto';
+  font-style: normal;  
+  font-weight:600;
+  font-size: 1.5rem;
+}
+
+/* CHECKOUT - MAIN - SUBTITLE */
+.ul-price{
+  padding-top: 1rem;
+  
+}
+
+.fieldset{
+  padding-left: 2%;
+  padding-right: 2%;
+  width: 100%;
+}
+
+.input{
+  margin-top: 5px;
+  width: 100%;
+  height: 35px;
+}
+
+.label{
+  font-family: 'Roboto';
+  font-style: normal;  
+  font-weight:400;
+  font-size: 1rem;
+}
+
+.div-cardData {
+  display: flex;
+  flex-direction: row;
+}
+
+.fieldset-date{
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  width: 70%;
+}
+
+.fieldset-cvv{
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  width: 30%;
+}
+
+.div-pay-button {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 6%;
+}
+
+.button-pay{
+  width: 70%;
+  height: 3rem;
+  background-color: rgba(198, 40, 40, 0.5);
+  font-weight: 400;
+  border-radius: 40px;
+  font-family: 'Roboto';
+  font-size: 1.5rem;
+  text-align: center;
+  color:rgba(255, 255, 255, 0.5);
+  border: none;
+}
+
+.button-pay:hover {
+  background-color: #C79100;
+}
+
+.div-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.div-painel {
+  display: block;
+  width: 80%;
+  height: 80%;
+  padding: 5%;
+  border-radius: 8px;
+  border: 1px solid #000;
+  background: #fff;
+  margin: 5% auto;
+}
+
+.div-painel-title {
+  text-align: center;
+  font-family: 'Lobster';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2rem;
+  color: #8E0000;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.div-painel-description {
+  padding-top: 5%;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+.div-painel-button{
+  text-align: center;
+  font-family: 'Lobster';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2rem;
+  color: #8E0000;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button-final{
+  width: 50%;
+  height: 3rem;
+  background-color: #C62828;
+  font-weight: 400;
+  border-radius: 40px;
+  font-family: 'Roboto';
+  font-size: 1.5rem;
+  text-align: center;
+  color: white; 
+  border: none;
+  margin-top: 10%;
+}

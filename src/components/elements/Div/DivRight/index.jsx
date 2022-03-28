@@ -3,37 +3,96 @@ import Div from '../';
 import Span from '../../Span';
 import Button from '../../Button'
 import Ul from '../../Ul';
-import { Link } from 'react-router-dom';
+import Form from '../../Form'
 
-class DivDireita extends Component {
+class DivRight extends Component {
 
     renderButton(props){
-        const selectedOptions=props['prices']['options'].filter(selectedOption => {
-            return selectedOption['ingredient']===props['prices']['currentIngredient']
-        })
-        if (selectedOptions.length>0 || props['prices']['currentMultiselect']){
-            if (props['last']){
-                return <Link to="/checkout"><Button {...props} className="confirm" parameter="">Prosseguir</Button></Link>
-            }
-            else {
-                return <Button {...props} className="confirm" parameter={props['prices']['currentIngredient']}>Prosseguir</Button>
-            }
+        if (props['page']==='/'){
+            return (
+                <Button {...props} className="confirm" parameter={props['element']['currentIngredient']}>
+                    Prosseguir
+                </Button>
+            )
         }
+        else if (props['page']==='/checkout'){
+            return (
+                <Button {...props} className="pay" parameter={this.state}>
+                    Pagar
+                </Button>
+            )
+        }
+    }
+
+    renderTopArea(props){
+        if (props['page']==='/'){
+            return (
+                <>
+                    <Div className='ingredients-list'>
+                        <Ul {...props } module='prices'></Ul>
+                    </Div>
+                </>
+            )
+        }
+        else if (props['page']==='/checkout'){
+            return (
+                <>
+                    <Div className='form'>
+                        <Form {...props}/>
+                    </Div>
+                </>
+            )
+        }
+    }
+
+    renderBottomArea(props){
+        if (props['page']==='/'){
+            return (
+                <>
+                    <Div className='ingredients-price'>
+                        <Span className='ingredients-price'>{props['element']['prices']}</Span>
+                    </Div>
+                    <Div className='ingredients-button'>
+                        {this.renderButton(props)}
+                    </Div>
+                </>
+            )
+        }
+        else if (props['page']==='/checkout'){
+            return (
+                <>
+                    <Div className='pay-button'>
+                        {this.renderButton(props)}
+                    </Div>
+                </>
+            )
+        }
+    }
+
+    renderDiv(props){
+        return (
+            <>                    
+                <Div className='top-area'>
+                    <Div className='ingredients-title'>
+                        <Span className='ingredients-title'>{props['element']['title-right']||'Ingredientes Selecionados:'}</Span>
+                    </Div>
+                    {this.renderTopArea(props)}
+                </Div>
+                <Div className='bottom-area'>
+                    {this.renderBottomArea(props)}
+                </Div>
+            </>
+        )
     }
 
     render() {
         const {...props } = this.props;
         return (
             <Div className='right'>
-                <Span className='ingredients-title'>Ingredientes Selecionados:</Span>
-                <Div className='ingredientsList'>
-                    <Ul {...props } module='prices'></Ul>
-                </Div>
-                <Span className='ingredients-price'>{props['prices']['prices']}</Span>
-                {this.renderButton(props)}
+                {this.renderDiv(props)}
             </Div>
         );
     }
 }
 
-export default DivDireita;
+export default DivRight;

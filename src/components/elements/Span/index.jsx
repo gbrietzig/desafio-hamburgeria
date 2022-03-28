@@ -6,7 +6,7 @@ class Span extends Component {
     render() {
         const { className, ...props } = this.props;
         return (
-            <span {...props} className={`span ${className}`} >
+            <span {...props} className={`span span-${className}`} >
                 <Text text={this.props.children} />
             </span>
         );

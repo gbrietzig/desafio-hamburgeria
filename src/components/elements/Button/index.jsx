@@ -14,6 +14,7 @@ class Button extends Component {
     render() {
         const { className, ...props } = this.props;
         return (
+            
             <button {...props} className={`button button-${className}`} onClick={this.handleClick}>
                 <Text text={this.props.children} />
             </button>

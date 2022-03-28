@@ -1,47 +1,20 @@
 import { Component } from 'react';
 import DivLeft from '../Div/DivLeft';
 import DivRight from '../Div/DivRight';
-import {sandwich} from '../../../shared/sandwich'
-import { Navigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
+import Modal from '../Div/Modal'
 
-class Header extends Component {
+class Main extends Component {
     constructor() {
         super()
-        this.state = {
-            currentSandwich:{}
-        }
-        this.selectCurrentIngredient = this.selectCurrentIngredient.bind(this)
         this.checkClick = this.checkClick.bind(this)
         this.confirmIngredient = this.confirmIngredient.bind(this)
-    }    
-
-    createStateBase(currentSandwich){
-        Object.keys(sandwich).forEach(ingredientKey => {                
-            let ingredient=sandwich[ingredientKey]
-            let options = ingredient['options']   
-            options.map(option => {
-                return option['selected']=false
-            });            
-
-            currentSandwich[ingredientKey]= {
-                'ingredient': ingredient['ingredient'],
-                'ingredient_display': ingredient['ingredient_display'],
-                'title': ingredient['title'],
-                'multiselect': ingredient['multiselect'],
-                'options': options,
-                'confirmed': false,
-            }
-        });
-        this.setState({ currentSandwich })
-        return currentSandwich
+        this.checkCheckout = this.checkCheckout.bind(this)
     }
-
+    
     selectCurrentIngredient() {
-        let currentSandwich=this.state['currentSandwich']
-
-        if (Object.keys(currentSandwich).length === 0) {
-            currentSandwich=this.createStateBase(currentSandwich)
-        }
+        const {...props } = this.props;
+        let currentSandwich=props.returnStateBase()
         let noConfirmedElements=[]
         Object.keys(currentSandwich).forEach(ingredientKey=>{
             const ingredient=currentSandwich[ingredientKey]
@@ -49,14 +22,12 @@ class Header extends Component {
                 noConfirmedElements.push(ingredient)
             }
         });
-        return {
-            'ingredient': noConfirmedElements[0],
-            'last': noConfirmedElements.length===1
-        }
+        return noConfirmedElements[0]
     }
 
     checkClick(clickedIngredient){
-        let currentSandwich=this.state['currentSandwich']
+        const {...props } = this.props;
+        let currentSandwich=props.returnStateBase()
         let currentIngredient=currentSandwich[clickedIngredient['ingredient']]
         if (currentIngredient['options'][clickedIngredient['index']]['selected'])
         {
@@ -77,15 +48,16 @@ class Header extends Component {
             currentIngredient['options'][clickedIngredient['index']]['selected']=true            
         }
         currentSandwich[clickedIngredient['ingredient']]=currentIngredient
-        this.setState({ currentSandwich })
+        props.updateStateBase(currentSandwich)
     }
 
     selectedsOptions(ingredient){
-        let currentSandwich=this.state['currentSandwich']
+        const {...props } = this.props;
+        let currentSandwich=props.returnStateBase()
         const currentSandwichKeys = Object.keys(currentSandwich)
         let completeSelectedOptions=[]
         currentSandwichKeys.forEach(currentSandwichKey => {
-            const currentIngredient=currentSandwich[currentSandwichKey] //ingrediente atual
+            const currentIngredient=currentSandwich[currentSandwichKey]
             let selectedOptions=currentIngredient['options'].filter(currentIngredientOption => {
                 return currentIngredientOption['selected']
             });
@@ -114,14 +86,15 @@ class Header extends Component {
     }
 
     confirmIngredient(confirmedIngredient){
-        let currentSandwich=this.state['currentSandwich']
+        const {...props } = this.props;
+        let currentSandwich=props.returnStateBase()
         const currentIngredient = currentSandwich[confirmedIngredient]
         const selectedsOptions = currentIngredient['options'].filter(selectedOption => {
             return selectedOption['selected']
         })
         if (selectedsOptions.length>0 || currentIngredient['multiselect']){
             currentSandwich[confirmedIngredient]['confirmed']=true
-            this.setState({ currentSandwich })
+            props.updateStateBase(currentSandwich)
         }
         else (
             // Ou outra validação caso o evento do botão seja chamado mesmo sem ele ser exibido
@@ -129,26 +102,86 @@ class Header extends Component {
         )
     }
 
+    checkCheckout(){
+        const client= this.props.returnStateClient()
+        const validations = client.validations
+        let errors = []
+        const validationsKeys=Object.keys(validations)
+
+        validationsKeys.forEach(validationsKey => {
+            const validation=validations[validationsKey]
+            errors = [...errors, ...validation['errors']]
+        })
+
+        // if (client['name']===""||client['cardNumber']===""||client['date']===""||client['cvv']===""||client['cpf']===""){
+        //     window.alert("Preencha todos os campos.")
+        // }
+        // else if (errors.length>0){
+        //     window.alert("Corrija os campos indicados.")
+        // }
+        // else{
+        //     this.props.updateStateModal(true)
+        // }
+        this.props.updateStateModal(true)
+    }
+
+    renderMain(props, ingredient){
+        if (props['page']==='/'){
+            return (
+                <>
+                    <DivLeft element={ingredient} click={this.checkClick} {...props}/>
+                    <DivRight element={this.selectedsOptions(ingredient)} click={this.confirmIngredient} {...props}/>
+                </>
+            )
+        }
+        else if (props['page']==='/checkout'){
+            let currentSandwich=props.returnStateBase()
+
+            const currentSandwichKeys=Object.keys(currentSandwich)
+            const selectedsOptions=[]
+            currentSandwichKeys.forEach(currentSandwichKey => {
+                const currentIngredient=currentSandwich[currentSandwichKey]
+                currentIngredient['options'].forEach(selectedOption => {
+                    if(selectedOption['selected']){
+                        selectedsOptions.push(selectedOption)
+                    }
+                })
+                
+            });
+            const final_price=this.sumPrices(selectedsOptions)
+            const element={
+                'title': 'Obrigado pela Preferência!',
+                'title-right': 'Insira os dados do pagamento:',
+                'price': final_price,
+                'options': selectedsOptions
+            }
+
+            return (
+                <>
+                    <DivLeft element={element} click={this.checkClick} {...props}/>
+                    <DivRight element={element} click={this.checkCheckout} {...props}/>
+                    {props.returnStateModal()?<Modal {...props} />:""}
+                </>
+            )
+        }
+        
+    }
+
     render() {
         const {...props } = this.props;
-        const currentSandwich=this.setState['sandwich']
-        if (props['page']==='index'){
-            const current=this.selectCurrentIngredient()
+        const ingredient=this.selectCurrentIngredient()
+        const destination = ingredient?'/':'/checkout'
+        if (props['page']===destination){
             return (
                 <main className='main'>
-                    <DivLeft ingredient={current['ingredient']} click={this.checkClick} {...props}/>
-                    <DivRight prices={this.selectedsOptions(current['ingredient'])} last={current['last']} click={this.confirmIngredient} {...props}/>
+                    {this.renderMain(props, ingredient)}
                 </main>
             );
         }
-        else if (props['page']==='checkout'){
-            console.log('checkout')
-            console.log(this.state['sandwich'])
-            return (
-                <DivLeft ingredient={currentSandwich} {...props}/>
-            )
+        else {
+            return (<Navigate to={destination} />)
         }
     }
 }
 
-export default Header;
+export default Main;

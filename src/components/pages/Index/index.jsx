@@ -1,17 +1,17 @@
 import { Component } from 'react';
-// import { Link } from 'react-router-dom';
 import Header from '../../elements/Header';
 import Main from '../../elements/Main';
 
-class Perfil extends Component {
+class Index extends Component {
     render() {
+        const {...props } = this.props;
         return (
             <>
                 <Header>Monte Seu Sanduíche</Header>
-                <Main page="index" />
+                <Main page="/" {...props} />
             </>
         );
     }
 }
 
-export default Perfil;
+export default Index;
